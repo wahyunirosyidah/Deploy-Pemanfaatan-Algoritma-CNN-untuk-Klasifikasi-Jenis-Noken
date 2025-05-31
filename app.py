@@ -6,12 +6,12 @@ import tensorflow as tf
 st.markdown("💡 Bergabung sebagai Duta Noken adalah langkah kecil untuk dampak budaya yang besar.")
 
 
-# @st.cache(allow_output_mutation=True)
-# def load_model():
-#   model=tf.keras.models.load_model('mobilenetv2.h5')
-#   return model
-# with st.spinner('Model is being loaded..'):
-#   model=load_model()
+@st.cache(allow_output_mutation=True)
+def load_model():
+  model=tf.keras.models.load_model('mobilenetv2.h5')
+  return model
+with st.spinner('Model is being loaded..'):
+  model=load_model()
   
   
 # classes = ['Bitu Agia', 'Junum Ese']  # Sesuaikan dengan kelas kamu
