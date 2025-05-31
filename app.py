@@ -32,9 +32,9 @@ with st.spinner('Model is being loaded..'):
 # # Konfigurasi halaman
 # st.set_page_config(page_title="Klasifikasi Noken", layout="centered")
 
-# # Judul utama
-# st.title("Aplikasi Klasifikasi Noken")
-# st.markdown("Membantu pelestarian budaya Papua melalui teknologi AI.")
+# Judul utama
+st.title("Aplikasi Klasifikasi Noken")
+st.markdown("Membantu pelestarian budaya Papua melalui teknologi AI.")
 
 # Navigasi menggunakan tab
 tab1, tab2, tab3 = st.tabs(["🏷️ Klasifikasi Noken", "📚 Tentang Noken", "🧶 Duta Noken"])
