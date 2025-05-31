@@ -36,8 +36,8 @@ with st.spinner('Model is being loaded..'):
 # st.title("Aplikasi Klasifikasi Noken")
 # st.markdown("Membantu pelestarian budaya Papua melalui teknologi AI.")
 
-# # Navigasi menggunakan tab
-# tab1, tab2, tab3 = st.tabs(["🏷️ Klasifikasi Noken", "📚 Tentang Noken", "🧶 Duta Noken"])
+# Navigasi menggunakan tab
+tab1, tab2, tab3 = st.tabs(["🏷️ Klasifikasi Noken", "📚 Tentang Noken", "🧶 Duta Noken"])
 
 # # ======================== TAB 1: KLASIFIKASI ========================
 # with tab1:
