@@ -4,8 +4,8 @@ from PIL import Image
 from tensorflow.keras.models import load_model
 
 # Load model dan kelas
-model = load_model('mobilenetv2.h5')  # Sesuaikan nama file model kamu
-classes = ['Bitu Agia', 'Junum Ese']  # Sesuaikan dengan kelas kamu
+model = load_model('mobilenetv2.h5')  
+classes = ['Bitu Agia', 'Junum Ese'] 
 
 # Preprocessing gambar
 def preprocess_image(img):
@@ -20,18 +20,43 @@ def resize_display_image(img, max_size=300):
     img.thumbnail((max_size, max_size))
     return img
 
-# Konfigurasi halaman
 st.set_page_config(page_title="Klasifikasi Noken", layout="centered")
 
-# Judul utama
 st.title("Aplikasi Klasifikasi Noken")
-st.markdown("Membantu pelestarian budaya Papua melalui teknologi AI.")
+st.markdown("Membantu pelestarian budaya Papua melalui teknologi")
 
-# Navigasi menggunakan tab
-tab1, tab2, tab3 = st.tabs(["🏷️ Klasifikasi Noken", "📚 Tentang Noken", "🧶 Duta Noken"])
+tab1, tab2= st.tabs(["📚 Tentang Noken", "🏷️ Klasifikasi Noken"])
 
-# ======================== TAB 1: KLASIFIKASI ========================
+# ======================== TAB 1: EDUKASI NOKEN ========================
 with tab1:
+    st.header("📖 Apa itu Noken?")
+    st.image("junum_ese.jpg", caption="Contoh Noken Tradisional")
+    st.write("""
+    **Noken** adalah tas tradisional masyarakat Papua yang terbuat dari serat kulit kayu.
+    Noken bukan sekadar tas, tapi juga simbol budaya, identitas, dan kedewasaan bagi perempuan Papua.
+
+    Pada 4 Desember 2012, Noken diakui oleh **UNESCO** sebagai *Warisan Budaya Takbenda Dunia*.
+    """)
+
+    st.markdown("🔗 [Baca selengkapnya di situs UNESCO](https://ich.unesco.org/en/RL/noken-multi-functional-handwoven-bag-carrying-knowledge-and-identity-00619)")
+
+    with st.expander("🎯 Fakta Menarik tentang Noken"):
+        st.markdown("""
+        - ✅ Noken dibuat secara manual dari serat kulit kayu, dengan proses pemintalan dan perajutan yang rumit, memakan waktu berhari-hari hingga berminggu-minggu
+        - 📦 Digunakan untuk membawa hasil kebun, barang, hingga bayi.
+        - 🧵 Dibuat berbaga macam bahan alam, beberapa diataranya adalah pohon Ganemo atau Anggrek.
+        """)
+
+    with st.expander("🧪 Uji Pengetahuan Kamu!"):
+        question = st.radio("Noken Junum Ese berasal dari daerah mana?", ["Sentani", "Asmat", "Arfak"])
+        if st.button("Cek Jawaban"):
+            if question == "Asmat":
+                st.success("✅ Benar! Noken Junum Ese berasal dari Asmat.")
+            else:
+                st.error("❌ Salah! Jawaban yang benar: Asmat.")
+
+# ======================== TAB 2: KLASIFIKASI ========================
+with tab2:
     st.subheader("🔍 Klasifikasikan Jenis Noken")
     option = st.radio("Pilih metode input gambar:", ["📷 Ambil Foto", "📁 Upload Gambar"])
 
@@ -48,7 +73,7 @@ with tab1:
 
     if image:
         display_img = resize_display_image(image)
-        st.image(display_img, caption="Gambar yang digunakan", use_container_width=True)
+        st.image(display_img, caption="Gambar yang digunakan")
 
         input_array = preprocess_image(image)
         prediction = model.predict(input_array)[0][0]
@@ -56,60 +81,7 @@ with tab1:
         confidence = prediction if prediction > 0.5 else 1 - prediction
 
         st.markdown(f"### ✅ Prediksi: `{label}`")
-        st.markdown(f"**Confidence**: {confidence:.2%}")
+        st.markdown(f"**Akurasi**: {confidence:.2%}")
 
-        if st.button("💾 Simpan Hasil"):
-            st.success("✅ Hasil klasifikasi disimpan! (simulasi)")
 
-# ======================== TAB 2: EDUKASI NOKEN ========================
-with tab2:
-    st.header("📖 Apa itu Noken?")
-    st.image("junum_ese.jpg", caption="Contoh Noken Tradisional", use_container_width=True)
-    st.write("""
-    **Noken** adalah tas tradisional masyarakat Papua yang terbuat dari serat kulit kayu.
-    Noken bukan sekadar tas, tapi juga simbol budaya, identitas, dan kedewasaan bagi perempuan Papua.
 
-    Pada 4 Desember 2012, Noken diakui oleh **UNESCO** sebagai *Warisan Budaya Takbenda Dunia*.
-    """)
-
-    st.markdown("🔗 [Baca selengkapnya di situs UNESCO](https://ich.unesco.org/en/RL/noken-multi-functional-handwoven-bag-carrying-knowledge-and-identity-00619)")
-
-    with st.expander("🎯 Fakta Menarik tentang Noken"):
-        st.markdown("""
-        - ✅ Noken dibuat oleh lelaki dan perempuan Papua.
-        - 📦 Digunakan untuk membawa hasil kebun, barang, hingga bayi.
-        - 🧵 Dibuat dari serat pohon seperti pohon Ganemo atau Anggrek.
-        """)
-
-    with st.expander("🧪 Uji Pengetahuan Kamu!"):
-        question = st.radio("Apa bahan utama pembuatan Noken?", ["Plastik", "Serat kulit kayu", "Benang wol"])
-        if st.button("Cek Jawaban"):
-            if question == "Serat kulit kayu":
-                st.success("✅ Benar! Noken dibuat dari kulit kayu.")
-            else:
-                st.error("❌ Salah! Jawaban yang benar: Serat kulit kayu.")
-
-# ======================== TAB 3: DUTA NOKEN ========================
-with tab3:
-    st.header("🧶 Duta Noken")
-    st.write("""
-    **Duta Noken** adalah individu atau perwakilan yang berperan dalam meningkatkan kesadaran, pelestarian,
-    dan promosi budaya Papua melalui edukasi dan aktivitas komunitas, khususnya seputar Noken.
-    """)
-
-    st.markdown("""
-    ### 📌 Peran Duta Noken:
-    - 🧑‍🏫 Mengedukasi masyarakat tentang nilai budaya Noken.
-    - 📸 Mendokumentasikan proses pembuatan Noken.
-    - 🧵 Mengadakan workshop dan pameran bersama pengrajin lokal.
-    """)
-
-    st.markdown("### 📬 Tertarik bergabung?")
-    st.write("""
-    Hubungi kami di:
-    - 📧 Email: **duta@noken.id**
-    - 📱 Instagram: [@dutanoken](https://instagram.com/dutanoken)
-    - 🌐 Website: [www.nokenpapua.id](https://www.nokenpapua.id) _(simulasi)_
-    """)
-
-    st.markdown("💡 Bergabung sebagai Duta Noken adalah langkah kecil untuk dampak budaya yang besar.")
