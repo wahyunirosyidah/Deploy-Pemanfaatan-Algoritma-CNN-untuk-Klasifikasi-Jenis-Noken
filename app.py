@@ -1,10 +1,10 @@
 import streamlit as st
 import numpy as np
 from PIL import Image
-from tensorflow.keras.models import load_model
+# from tensorflow.keras.models import load_model
 
 # Load model dan kelas
-model = load_model('mobilenetv2.h5')  
+# model = load_model('mobilenetv2.h5')  
 classes = ['Bitu Agia', 'Junum Ese'] 
 
 # Preprocessing gambar
@@ -55,33 +55,33 @@ with tab1:
             else:
                 st.error("❌ Salah! Jawaban yang benar: Asmat.")
 
-# ======================== TAB 2: KLASIFIKASI ========================
-with tab2:
-    st.subheader("🔍 Klasifikasikan Jenis Noken")
-    option = st.radio("Pilih metode input gambar:", ["📷 Ambil Foto", "📁 Upload Gambar"])
+# # ======================== TAB 2: KLASIFIKASI ========================
+# with tab2:
+#     st.subheader("🔍 Klasifikasikan Jenis Noken")
+#     option = st.radio("Pilih metode input gambar:", ["📷 Ambil Foto", "📁 Upload Gambar"])
 
-    image = None
-    if option == "📁 Upload Gambar":
-        uploaded_file = st.file_uploader("Upload gambar", type=["jpg", "jpeg", "png"])
-        if uploaded_file:
-            image = Image.open(uploaded_file).convert("RGB")
+#     image = None
+#     if option == "📁 Upload Gambar":
+#         uploaded_file = st.file_uploader("Upload gambar", type=["jpg", "jpeg", "png"])
+#         if uploaded_file:
+#             image = Image.open(uploaded_file).convert("RGB")
 
-    elif option == "📷 Ambil Foto":
-        camera_image = st.camera_input("Ambil foto menggunakan kamera")
-        if camera_image:
-            image = Image.open(camera_image).convert("RGB")
+#     elif option == "📷 Ambil Foto":
+#         camera_image = st.camera_input("Ambil foto menggunakan kamera")
+#         if camera_image:
+#             image = Image.open(camera_image).convert("RGB")
 
-    if image:
-        display_img = resize_display_image(image)
-        st.image(display_img, caption="Gambar yang digunakan")
+#     if image:
+#         display_img = resize_display_image(image)
+#         st.image(display_img, caption="Gambar yang digunakan")
 
-        input_array = preprocess_image(image)
-        prediction = model.predict(input_array)[0][0]
-        label = classes[1] if prediction > 0.5 else classes[0]
-        confidence = prediction if prediction > 0.5 else 1 - prediction
+#         input_array = preprocess_image(image)
+#         prediction = model.predict(input_array)[0][0]
+#         label = classes[1] if prediction > 0.5 else classes[0]
+#         confidence = prediction if prediction > 0.5 else 1 - prediction
 
-        st.markdown(f"### ✅ Prediksi: `{label}`")
-        st.markdown(f"**Akurasi**: {confidence:.2%}")
+#         st.markdown(f"### ✅ Prediksi: `{label}`")
+#         st.markdown(f"**Akurasi**: {confidence:.2%}")
 
 
 
